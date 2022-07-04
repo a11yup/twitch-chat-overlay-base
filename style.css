@@ -1,0 +1,39 @@
+@import url("https://fonts.googleapis.com/css?family=Futura");
+
+/* Reusable CSS variables */
+:root {
+  --size-s: 0.5rem; /* = 8px */
+  --size-m: 1rem; /* = 16px */
+  --size-l: 1.5rem; /* = 24px */
+  --size-xl: 2rem; /* = 32 px */
+}
+
+/* Very basic HTML resets */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: Futura, sans-serif;
+  color: white;
+}
+
+body {
+  height: 100vh;
+  padding: 90px;
+  font-size: var(--size-l);
+}
+
+.chat-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: calc(100% / 3);
+  height: 80%;
+  padding: var(--size-xl);
+  border-radius: 60px;
+  overflow-y: hidden;
+  background-color: rgba(0, 0, 0, 0.9);
+}
