@@ -1,20 +1,6 @@
-import replaceEmotesWithImageTags from "./emotes.js";
+import createMessageElement from "./createMessageElement.js";
 
 const MAX_MESSAGES_COUNT = 20;
-
-const createMessageElement = (tags, message) => {
-  const messageHTMLWithEmotesReplaced = replaceEmotesWithImageTags(
-    message,
-    tags.emotes
-  );
-
-  const userNameHTML = `<span style="color: ${tags.color}">${tags["display-name"]}</span>`;
-
-  const messageElement = document.createElement("p");
-  messageElement.innerHTML = `${userNameHTML}: ${messageHTMLWithEmotesReplaced}`;
-
-  return messageElement;
-};
 
 const client = tmi.Client({
   channels: ["thelegumeduprix"],
