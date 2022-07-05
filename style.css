@@ -41,3 +41,9 @@ body {
 .chat-box p {
   margin-top: var(--size-m);
 }
+
+.chat-box p img {
+  margin-bottom: -5px;
+  width: 2rem;
+  height: 2rem;
+}
