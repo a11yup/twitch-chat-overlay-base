@@ -20,7 +20,13 @@ export const bttvGlobalLookupTable = bttvGlobalEmotes.reduce(
 
 export const bttvGlobalEmoteCodes = Object.keys(bttvGlobalLookupTable);
 
-const userId = "118820534";
+const queryParameters = new URLSearchParams(window.location.search);
+const channelName = queryParameters.get("channelName");
+
+const userIdResponse = await fetch(
+  `https://decapi.me/twitch/id/${channelName}`
+);
+const userId = await userIdResponse.text();
 
 const bttvChannelEmotesResponse = await fetch(
   `https://api.betterttv.net/3/cached/users/twitch/${userId}`

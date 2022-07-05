@@ -2,36 +2,47 @@ import createMessageElement from "./createMessageElement.js";
 
 const MAX_MESSAGES_COUNT = 20;
 
+const queryParameters = new URLSearchParams(window.location.search);
+const CHANNEL_NAME = queryParameters.get("channelName");
+const CHAT_STRIP = queryParameters.get("chatStrip");
+
 const client = tmi.Client({
-  channels: ["thelegumeduprix"],
+  channels: [CHANNEL_NAME],
 });
 
 client.connect();
 
-client.on("message", (channel, tags, message, self) => {
-  const messageElement = createMessageElement(tags, message);
+debugger;
+if (CHAT_STRIP) {
+  document.querySelector(".chat-box").style.display = "none";
 
-  const chatBoxElement = document.querySelector(".chat-box");
-  chatBoxElement.append(messageElement);
+  client.on("message", (channel, tags, message, self) => {
+    const messageElement = createMessageElement(tags, message);
 
-  const allMessageElements = document.querySelectorAll(".chat-box p");
+    const chatBoxElement = document.querySelector(".chat-strip");
+    chatBoxElement.append(messageElement);
 
-  if (allMessageElements.length > MAX_MESSAGES_COUNT) {
-    // remove the first message from the beginning of the list
-    allMessageElements[0]?.remove();
-  }
-});
+    const allMessageElements = document.querySelectorAll(".chat-strip p");
 
-client.on("message", (channel, tags, message, self) => {
-  const messageElement = createMessageElement(tags, message);
+    if (allMessageElements.length > MAX_MESSAGES_COUNT) {
+      // remove the first message from the beginning of the list
+      allMessageElements[0]?.remove();
+    }
+  });
+} else {
+  document.querySelector(".chat-strip").style.display = "none";
 
-  const chatBoxElement = document.querySelector(".chat-strip");
-  chatBoxElement.append(messageElement);
+  client.on("message", (channel, tags, message, self) => {
+    const messageElement = createMessageElement(tags, message);
 
-  const allMessageElements = document.querySelectorAll(".chat-strip p");
+    const chatBoxElement = document.querySelector(".chat-box");
+    chatBoxElement.append(messageElement);
 
-  if (allMessageElements.length > MAX_MESSAGES_COUNT) {
-    // remove the first message from the beginning of the list
-    allMessageElements[0]?.remove();
-  }
-});
+    const allMessageElements = document.querySelectorAll(".chat-box p");
+
+    if (allMessageElements.length > MAX_MESSAGES_COUNT) {
+      // remove the first message from the beginning of the list
+      allMessageElements[0]?.remove();
+    }
+  });
+}
