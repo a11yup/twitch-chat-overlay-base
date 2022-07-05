@@ -1,4 +1,9 @@
-import bttvGlobalLookupTable, { bttvGlobalEmoteCodes } from "./bttv.js";
+import {
+  bttvGlobalLookupTable,
+  bttvGlobalEmoteCodes,
+  bttvChannelLookupTable,
+  bttvChannelEmoteCodes,
+} from "./bttv.js";
 
 const TWITCH_URL_PREFIX = `https://static-cdn.jtvnw.net/emoticons/v2`;
 const EMOTE_REGEX_PART_1 = "(?:^|(?<=\\s))";
@@ -81,10 +86,35 @@ const replaceBTTVGlobalEmotes = (message) => {
   return result;
 };
 
+const replaceBTTVChannelEmotes = (message) => {
+  // Check if there are any channel emote codes found in the message...
+  const noChannelEmoteCodeFound = bttvChannelEmoteCodes.every(
+    (emoteCode) => !message.includes(emoteCode)
+  );
+
+  // ... and if not just return the original message
+  if (noChannelEmoteCodeFound) return message;
+
+  // Else do the work...
+  let result = message;
+
+  // Go through each code and if you find it replace it respectively.
+  bttvChannelEmoteCodes.forEach((emoteCode) => {
+    result = result.replaceAll(emoteCode, (matchedCode) => {
+      const emoteId = bttvChannelLookupTable[matchedCode].id;
+
+      return `<img src="${BTTV_URL_PREFIX}/${emoteId}/2x" alt="${matchedCode} bttv emote"/>`;
+    });
+  });
+
+  return result;
+};
+
 const replaceEmotesWithImageTags = (message, emotes) => {
   let result = message;
   result = replaceTwitchStandardEmotes(result, emotes);
   result = replaceBTTVGlobalEmotes(result);
+  result = replaceBTTVChannelEmotes(result);
   return result;
 };
 

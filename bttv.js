@@ -4,17 +4,45 @@ const bttvGlobalEmotesResponse = await fetch(
 
 const bttvGlobalEmotes = await bttvGlobalEmotesResponse.json();
 
-const bttvGlobalLookupTable = bttvGlobalEmotes.reduce((result, emote) => {
-  const emoteData = {
-    id: emote.id,
-    type: emote.imageType,
-  };
+export const bttvGlobalLookupTable = bttvGlobalEmotes.reduce(
+  (result, emote) => {
+    const emoteData = {
+      id: emote.id,
+      type: emote.imageType,
+    };
 
-  result[emote.code] = emoteData;
+    result[emote.code] = emoteData;
 
-  return result;
-}, {});
+    return result;
+  },
+  {}
+);
 
 export const bttvGlobalEmoteCodes = Object.keys(bttvGlobalLookupTable);
 
-export default bttvGlobalLookupTable;
+const userId = "118820534";
+
+const bttvChannelEmotesResponse = await fetch(
+  `https://api.betterttv.net/3/cached/users/twitch/${userId}`
+);
+
+const bttvChannelEmotesJSON = await bttvChannelEmotesResponse.json();
+const bttvChannelEmotes = bttvChannelEmotesJSON.channelEmotes.concat(
+  bttvChannelEmotesJSON.sharedEmotes
+);
+
+export const bttvChannelLookupTable = bttvChannelEmotes.reduce(
+  (result, emote) => {
+    const emoteData = {
+      id: emote.id,
+      type: emote.imageType,
+    };
+
+    result[emote.code] = emoteData;
+
+    return result;
+  },
+  {}
+);
+
+export const bttvChannelEmoteCodes = Object.keys(bttvChannelLookupTable);
