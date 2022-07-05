@@ -1,88 +1,51 @@
-const URL_PREFIX = `https://static-cdn.jtvnw.net/emoticons/v2`;
-const EMOTE_REGEX_PART_1 = "(?:^|(?<=\\s))";
-const EMOTE_REGEX_PART_2 = "(?:(?=\\s)|$)";
-
-const replaceEmotesWithImageTags = (message, emotes) => {
-  let result = message;
-
-  if (emotes) {
-    const replacementMap = {};
-
-    for (const [emoteId, occurenceIndices] of Object.entries(emotes)) {
-      const [startIndex, endIndex] = occurenceIndices[0].split("-");
-
-      const emoteText = message.slice(Number(startIndex), Number(endIndex) + 1);
-
-      replacementMap[
-        emoteText
-      ] = `<img src="${URL_PREFIX}/${emoteId}/default/dark/2.0" alt="emote" />`;
-    }
-
-    for (const [emoteText, replacement] of Object.entries(replacementMap)) {
-      const emotePattern = new RegExp(
-        `${EMOTE_REGEX_PART_1}${emoteText}${EMOTE_REGEX_PART_2}`,
-        "g"
-      );
-
-      result = result.replaceAll(emotePattern, replacement);
-    }
-  }
-
-  return result;
-};
+import replaceEmotesWithImageTags from "./emotes.js";
 
 const MAX_MESSAGES_COUNT = 20;
 
+const createMessageElement = (tags, message) => {
+  const messageHTMLWithEmotesReplaced = replaceEmotesWithImageTags(
+    message,
+    tags.emotes
+  );
+
+  const userNameHTML = `<span style="color: ${tags.color}">${tags["display-name"]}</span>`;
+
+  const messageElement = document.createElement("p");
+  messageElement.innerHTML = `${userNameHTML}: ${messageHTMLWithEmotesReplaced}`;
+
+  return messageElement;
+};
+
 const client = tmi.Client({
-  channels: [""],
+  channels: ["thelegumeduprix"],
 });
 
 client.connect();
 
 client.on("message", (channel, tags, message, self) => {
-  const messageElement = document.createElement("p");
-
-  const userName = `<span style="color: ${tags.color}">${tags["display-name"]}</span>`;
-
-  const messageWithEmotesReplaced = replaceEmotesWithImageTags(
-    message,
-    tags.emotes
-  );
-
-  messageElement.innerHTML = `${userName}: ${messageWithEmotesReplaced}`;
+  const messageElement = createMessageElement(tags, message);
 
   const chatBoxElement = document.querySelector(".chat-box");
   chatBoxElement.append(messageElement);
 
-  const currentlyExistingMessageElements =
-    document.querySelectorAll(".chat-box p");
+  const allMessageElements = document.querySelectorAll(".chat-box p");
 
-  if (currentlyExistingMessageElements.length > MAX_MESSAGES_COUNT) {
+  if (allMessageElements.length > MAX_MESSAGES_COUNT) {
     // remove the first message from the beginning of the list
-    currentlyExistingMessageElements[0]?.remove();
+    allMessageElements[0]?.remove();
   }
 });
 
 client.on("message", (channel, tags, message, self) => {
-  const messageElement = document.createElement("p");
-
-  const userName = `<span style="color: ${tags.color}">${tags["display-name"]}</span>`;
-
-  const messageWithEmotesReplaced = replaceEmotesWithImageTags(
-    message,
-    tags.emotes
-  );
-
-  messageElement.innerHTML = `${userName}: ${messageWithEmotesReplaced}`;
+  const messageElement = createMessageElement(tags, message);
 
   const chatBoxElement = document.querySelector(".chat-strip");
   chatBoxElement.append(messageElement);
 
-  const currentlyExistingMessageElements =
-    document.querySelectorAll(".chat-strip p");
+  const allMessageElements = document.querySelectorAll(".chat-strip p");
 
-  if (currentlyExistingMessageElements.length > MAX_MESSAGES_COUNT) {
+  if (allMessageElements.length > MAX_MESSAGES_COUNT) {
     // remove the first message from the beginning of the list
-    currentlyExistingMessageElements[0]?.remove();
+    allMessageElements[0]?.remove();
   }
 });

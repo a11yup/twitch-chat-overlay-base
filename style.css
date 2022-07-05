@@ -26,6 +26,7 @@ body {
   font-size: var(--size-l);
 }
 
+/* Styling for chat box */
 .chat-box {
   display: flex;
   flex-direction: column;
@@ -48,6 +49,7 @@ body {
   height: 2rem;
 }
 
+/* Styling for chat strip */
 .chat-strip {
   position: fixed;
   bottom: 0;
@@ -57,7 +59,6 @@ body {
   display: flex;
   justify-content: flex-end;
   background-color: rgba(0, 0, 0, 0.9);
-  border: 3px dotted red;
 }
 
 .chat-strip p {
