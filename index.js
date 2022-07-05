@@ -1,3 +1,5 @@
+const MAX_MESSAGES_COUNT = 20;
+
 const client = tmi.Client({
   channels: [""],
 });
@@ -16,4 +18,12 @@ client.on("message", (channel, tags, message, self) => {
 
   const chatBoxElement = document.querySelector(".chat-box");
   chatBoxElement.append(messageElement);
+
+  const currentlyExistingMessageElements =
+    document.querySelectorAll(".chat-box p");
+
+  if (currentlyExistingMessageElements.length > MAX_MESSAGES_COUNT) {
+    // remove the first message from the beginning of the list
+    currentlyExistingMessageElements[0]?.remove();
+  }
 });
