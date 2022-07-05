@@ -6,6 +6,7 @@
   --size-m: 1rem; /* = 16px */
   --size-l: 1.5rem; /* = 24px */
   --size-xl: 2rem; /* = 32 px */
+  --size-xxl: 2.5rem; /* = 40 px */
 }
 
 /* Very basic HTML resets */
@@ -44,9 +45,9 @@ body {
 }
 
 .chat-box p img {
-  margin-bottom: -5px;
-  width: 2rem;
-  height: 2rem;
+  margin: -1rem 0;
+  height: var(--size-xxl);
+  vertical-align: middle;
 }
 
 /* Styling for chat strip */
@@ -55,9 +56,11 @@ body {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 2.5rem;
+  height: var(--size-xxl);
+  padding-right: var(--size-s);
   display: flex;
   justify-content: flex-end;
+  line-height: var(--size-xxl);
   background-color: rgba(0, 0, 0, 0.9);
 }
 
@@ -66,7 +69,6 @@ body {
 }
 
 .chat-strip p img {
-  margin-bottom: -5px;
-  width: 2rem;
-  height: 2rem;
+  height: var(--size-xl);
+  vertical-align: middle;
 }
