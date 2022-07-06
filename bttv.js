@@ -2,7 +2,7 @@
   Getting general user data for later requests
 */
 const queryParameters = new URLSearchParams(window.location.search);
-const channelName = queryParameters.get("channelName");
+const channelName = queryParameters.get("channel");
 
 const userIdResponse = await fetch(
   `https://decapi.me/twitch/id/${channelName}`

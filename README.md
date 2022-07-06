@@ -11,11 +11,11 @@ A base for customizable Twitch chat overlays.
 So, for example if your twitch channel name is XYZ and you want the normal chat mode.
 
 ```
-http://127.0.0.1:8080/?channelName=XYZ
+http://127.0.0.1:8080/?channel=XYZ
 ```
 
 If you want the chat strip mode.
 
 ```
-http://127.0.0.1:8080/?channelName=XYZ&chatStrip=true
+http://127.0.0.1:8080/?channel=XYZ&chatStrip
 ```

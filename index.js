@@ -3,8 +3,8 @@ import createMessageElement from "./createMessageElement.js";
 const MAX_MESSAGES_COUNT = 20;
 
 const queryParameters = new URLSearchParams(window.location.search);
-const CHANNEL_NAME = queryParameters.get("channelName");
-const CHAT_STRIP = queryParameters.get("chatStrip");
+const CHANNEL_NAME = queryParameters.get("channel");
+const CHAT_STRIP_MODE = queryParameters.has("chatStrip");
 
 const client = tmi.Client({
   channels: [CHANNEL_NAME],
@@ -12,7 +12,7 @@ const client = tmi.Client({
 
 client.connect();
 
-if (CHAT_STRIP) {
+if (CHAT_STRIP_MODE) {
   document.querySelector(".chat-box").style.display = "none";
 
   client.on("message", (channel, tags, message, self) => {
