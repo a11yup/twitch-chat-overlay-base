@@ -4,10 +4,18 @@ A base for customizable Twitch chat overlays.
 
 ## Usage
 
-1. Add the name of your Twitch user channel in line 2 of `index.js`.
+1. Add the overlay to your OBS as a browser source. Make sure that all of the files are in the same folder. And make sure the "Local File" option is checked.
 
-```js
-  channels: ["channelName"],
+2. Append query parameters to the URL to specify your twitch channel name and which chat mode you want (normal or chat strip).
+
+So, for example if your twitch channel name is XYZ and you want the normal chat mode.
+
+```
+http://127.0.0.1:8080/?channelName=XYZ
 ```
 
-2. Add the overlay to your OBS as a browser source. Make sure that all of the files are in the same folder. And make sure the "Local File" option is checked.
+If you want the chat strip mode.
+
+```
+http://127.0.0.1:8080/?channelName=XYZ&chatStrip=true
+```
