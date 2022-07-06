@@ -3,6 +3,8 @@ import {
   bttvGlobalEmoteCodes,
   bttvChannelLookupTable,
   bttvChannelEmoteCodes,
+  ffzChannelLookupTable,
+  ffzChannelEmoteCodes,
 } from "./bttv.js";
 
 const TWITCH_URL_PREFIX = `https://static-cdn.jtvnw.net/emoticons/v2`;
@@ -10,6 +12,7 @@ const EMOTE_REGEX_PART_1 = "(?:^|(?<=\\s))";
 const EMOTE_REGEX_PART_2 = "(?:(?=\\s)|$)";
 
 const BTTV_URL_PREFIX = "https://cdn.betterttv.net/emote";
+const FFZ_URL_PREFIX = "https://cdn.betterttv.net/frankerfacez_emote";
 
 /*
   This function takes the Twitch message's `emotes` data to inject
@@ -79,7 +82,7 @@ const replaceBTTVGlobalEmotes = (message) => {
     result = result.replaceAll(emoteCode, (matchedCode) => {
       const emoteId = bttvGlobalLookupTable[matchedCode].id;
 
-      return `<img src="${BTTV_URL_PREFIX}/${emoteId}/2x" alt="${matchedCode} bttv emote"/>`;
+      return `<img src="${BTTV_URL_PREFIX}/${emoteId}/2x" />`;
     });
   });
 
@@ -103,7 +106,31 @@ const replaceBTTVChannelEmotes = (message) => {
     result = result.replaceAll(emoteCode, (matchedCode) => {
       const emoteId = bttvChannelLookupTable[matchedCode].id;
 
-      return `<img src="${BTTV_URL_PREFIX}/${emoteId}/2x" alt="${matchedCode} bttv emote"/>`;
+      return `<img src="${BTTV_URL_PREFIX}/${emoteId}/2x" />`;
+    });
+  });
+
+  return result;
+};
+
+const replaceFFZChannelEmotes = (message) => {
+  // Check if there are any channel emote codes found in the message...
+  const noChannelEmoteCodeFound = ffzChannelEmoteCodes.every(
+    (emoteCode) => !message.includes(emoteCode)
+  );
+
+  // ... and if not just return the original message
+  if (noChannelEmoteCodeFound) return message;
+
+  // Else do the work...
+  let result = message;
+
+  // Go through each code and if you find it replace it respectively.
+  ffzChannelEmoteCodes.forEach((emoteCode) => {
+    result = result.replaceAll(emoteCode, (matchedCode) => {
+      const emoteId = ffzChannelLookupTable[matchedCode].id;
+
+      return `<img src="${FFZ_URL_PREFIX}/${emoteId}/2" />`;
     });
   });
 
@@ -115,6 +142,7 @@ const replaceEmotesWithImageTags = (message, emotes) => {
   result = replaceTwitchStandardEmotes(result, emotes);
   result = replaceBTTVGlobalEmotes(result);
   result = replaceBTTVChannelEmotes(result);
+  result = replaceFFZChannelEmotes(result);
   return result;
 };
 

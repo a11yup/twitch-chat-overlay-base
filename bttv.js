@@ -1,3 +1,6 @@
+/*
+  BTTV Global Emotes Fetching
+*/
 const bttvGlobalEmotesResponse = await fetch(
   "https://api.betterttv.net/3/cached/emotes/global"
 );
@@ -20,6 +23,9 @@ export const bttvGlobalLookupTable = bttvGlobalEmotes.reduce(
 
 export const bttvGlobalEmoteCodes = Object.keys(bttvGlobalLookupTable);
 
+/*
+  BTTV Channel Emotes Fetching
+*/
 const queryParameters = new URLSearchParams(window.location.search);
 const channelName = queryParameters.get("channelName");
 
@@ -52,3 +58,29 @@ export const bttvChannelLookupTable = bttvChannelEmotes.reduce(
 );
 
 export const bttvChannelEmoteCodes = Object.keys(bttvChannelLookupTable);
+
+/*
+  FrankerFaceZ Global Emotes Fetching
+*/
+
+const ffzChannelEmotesResponse = await fetch(
+  `https://api.betterttv.net/3/cached/frankerfacez/users/twitch/${userId}`
+);
+
+const ffzChannelEmotes = await ffzChannelEmotesResponse.json();
+
+export const ffzChannelLookupTable = ffzChannelEmotes.reduce(
+  (result, emote) => {
+    const emoteData = {
+      id: emote.id,
+      type: emote.imageType,
+    };
+
+    result[emote.code] = emoteData;
+
+    return result;
+  },
+  {}
+);
+
+export const ffzChannelEmoteCodes = Object.keys(ffzChannelLookupTable);
