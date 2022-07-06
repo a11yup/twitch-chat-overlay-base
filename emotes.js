@@ -74,10 +74,8 @@ const replaceBTTVGlobalEmotes = (message) => {
   // ... and if not just return the original message
   if (noGlobalEmoteCodeFound) return message;
 
-  // Else do the work...
+  // Else do the work: Go through each code and if you find it replace it respectively.
   let result = message;
-
-  // Go through each code and if you find it replace it respectively.
   bttvGlobalEmoteCodes.forEach((emoteCode) => {
     result = result.replaceAll(emoteCode, (matchedCode) => {
       const emoteId = bttvGlobalLookupTable[matchedCode].id;
@@ -98,10 +96,8 @@ const replaceBTTVChannelEmotes = (message) => {
   // ... and if not just return the original message
   if (noChannelEmoteCodeFound) return message;
 
-  // Else do the work...
+  // Else do the work: Go through each code and if you find it replace it respectively.
   let result = message;
-
-  // Go through each code and if you find it replace it respectively.
   bttvChannelEmoteCodes.forEach((emoteCode) => {
     result = result.replaceAll(emoteCode, (matchedCode) => {
       const emoteId = bttvChannelLookupTable[matchedCode].id;
@@ -122,10 +118,8 @@ const replaceFFZChannelEmotes = (message) => {
   // ... and if not just return the original message
   if (noChannelEmoteCodeFound) return message;
 
-  // Else do the work...
+  // Else do the work: Go through each code and if you find it replace it respectively.
   let result = message;
-
-  // Go through each code and if you find it replace it respectively.
   ffzChannelEmoteCodes.forEach((emoteCode) => {
     result = result.replaceAll(emoteCode, (matchedCode) => {
       const emoteId = ffzChannelLookupTable[matchedCode].id;
