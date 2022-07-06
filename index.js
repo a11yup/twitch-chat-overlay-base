@@ -12,7 +12,6 @@ const client = tmi.Client({
 
 client.connect();
 
-debugger;
 if (CHAT_STRIP) {
   document.querySelector(".chat-box").style.display = "none";
 
