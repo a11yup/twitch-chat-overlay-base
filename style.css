@@ -66,6 +66,7 @@ body {
 
 .chat-strip p {
   margin-left: var(--size-s);
+  flex: 1 0 auto;
 }
 
 .chat-strip p img {
