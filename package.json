@@ -13,7 +13,9 @@
     "url": "https://github.com/a11yup/twitch-chat-overlay-base/issues"
   },
   "homepage": "https://github.com/a11yup/twitch-chat-overlay-base#readme",
-  "dependencies": {},
+  "dependencies": {
+    "escape-string-regexp": "^5.0.0"
+  },
   "devDependencies": {
     "parcel": "^2.6.2"
   }

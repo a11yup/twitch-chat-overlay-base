@@ -1,3 +1,4 @@
+import escapeStringRegexp from "escape-string-regexp";
 import bttv from "./bttv.js";
 
 const TWITCH_URL_PREFIX = `https://static-cdn.jtvnw.net/emoticons/v2`;
@@ -42,7 +43,9 @@ const replaceTwitchStandardEmotes = (message, emotes) => {
 
   for (const [emoteText, replacement] of Object.entries(replacementMap)) {
     const emotePattern = new RegExp(
-      `${EMOTE_REGEX_PART_1}${emoteText}${EMOTE_REGEX_PART_2}`,
+      `${EMOTE_REGEX_PART_1}${escapeStringRegexp(
+        emoteText
+      )}${EMOTE_REGEX_PART_2}`,
       "g"
     );
 
