@@ -1,11 +1,4 @@
-import {
-  bttvGlobalLookupTable,
-  bttvGlobalEmoteCodes,
-  bttvChannelLookupTable,
-  bttvChannelEmoteCodes,
-  ffzChannelLookupTable,
-  ffzChannelEmoteCodes,
-} from "./bttv.js";
+import bttv from "./bttv.js";
 
 const TWITCH_URL_PREFIX = `https://static-cdn.jtvnw.net/emoticons/v2`;
 const EMOTE_REGEX_PART_1 = "(?:^|(?<=\\s))";
@@ -65,7 +58,10 @@ const replaceTwitchStandardEmotes = (message, emotes) => {
   It uses the global bttv emotes list and for each emote code (e.g. SourPls),
   it replaces that code with an `<img>` tag with the URL to that bttv emote.
 */
-const replaceBTTVGlobalEmotes = (message) => {
+const replaceBTTVGlobalEmotes = async (message) => {
+  const bttvGlobalLookupTable = await bttv.getBttvGlobalLookupTable();
+  const bttvGlobalEmoteCodes = Object.keys(bttvGlobalLookupTable);
+
   // Check if there are any global emote codes found in the message...
   const noGlobalEmoteCodeFound = bttvGlobalEmoteCodes.every(
     (emoteCode) => !message.includes(emoteCode)
@@ -87,7 +83,10 @@ const replaceBTTVGlobalEmotes = (message) => {
   return result;
 };
 
-const replaceBTTVChannelEmotes = (message) => {
+const replaceBTTVChannelEmotes = async (message) => {
+  const bttvChannelLookupTable = await bttv.getBttvChannelLookupTable();
+  const bttvChannelEmoteCodes = Object.keys(bttvChannelLookupTable);
+
   // Check if there are any channel emote codes found in the message...
   const noChannelEmoteCodeFound = bttvChannelEmoteCodes.every(
     (emoteCode) => !message.includes(emoteCode)
@@ -109,7 +108,10 @@ const replaceBTTVChannelEmotes = (message) => {
   return result;
 };
 
-const replaceFFZChannelEmotes = (message) => {
+const replaceFFZChannelEmotes = async (message) => {
+  const ffzChannelLookupTable = await bttv.getFfzChannelLookupTable();
+  const ffzChannelEmoteCodes = Object.keys(ffzChannelLookupTable);
+
   // Check if there are any channel emote codes found in the message...
   const noChannelEmoteCodeFound = ffzChannelEmoteCodes.every(
     (emoteCode) => !message.includes(emoteCode)
@@ -131,12 +133,12 @@ const replaceFFZChannelEmotes = (message) => {
   return result;
 };
 
-const replaceEmotesWithImageTags = (message, emotes) => {
+const replaceEmotesWithImageTags = async (message, emotes) => {
   let result = message;
   result = replaceTwitchStandardEmotes(result, emotes);
-  result = replaceBTTVGlobalEmotes(result);
-  result = replaceBTTVChannelEmotes(result);
-  result = replaceFFZChannelEmotes(result);
+  result = await replaceBTTVGlobalEmotes(result);
+  result = await replaceBTTVChannelEmotes(result);
+  result = await replaceFFZChannelEmotes(result);
   return result;
 };
 

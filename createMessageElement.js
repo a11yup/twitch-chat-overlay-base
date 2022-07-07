@@ -1,7 +1,7 @@
 import replaceEmotesWithImageTags from "./emotes.js";
 
-const createMessageElement = (tags, message) => {
-  const messageHTMLWithEmotesReplaced = replaceEmotesWithImageTags(
+const createMessageElement = async (tags, message) => {
+  const messageHTMLWithEmotesReplaced = await replaceEmotesWithImageTags(
     message,
     tags.emotes
   );

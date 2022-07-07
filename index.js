@@ -15,8 +15,8 @@ client.connect();
 if (CHAT_STRIP_MODE) {
   document.querySelector(".chat-box").style.display = "none";
 
-  client.on("message", (channel, tags, message, self) => {
-    const messageElement = createMessageElement(tags, message);
+  client.on("message", async (channel, tags, message, self) => {
+    const messageElement = await createMessageElement(tags, message);
 
     const chatBoxElement = document.querySelector(".chat-strip");
     chatBoxElement.append(messageElement);
@@ -31,8 +31,8 @@ if (CHAT_STRIP_MODE) {
 } else {
   document.querySelector(".chat-strip").style.display = "none";
 
-  client.on("message", (channel, tags, message, self) => {
-    const messageElement = createMessageElement(tags, message);
+  client.on("message", async (channel, tags, message, self) => {
+    const messageElement = await createMessageElement(tags, message);
 
     const chatBoxElement = document.querySelector(".chat-box");
     chatBoxElement.append(messageElement);

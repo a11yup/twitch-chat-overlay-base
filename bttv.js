@@ -1,25 +1,33 @@
-/*
-  Getting general user data for later requests
-*/
-const queryParameters = new URLSearchParams(window.location.search);
-const channelName = queryParameters.get("channel");
+let userId;
+let bttvGlobalLookupTable;
+let bttvChannelLookupTable;
+let ffzChannelLookupTable;
 
-const userIdResponse = await fetch(
-  `https://decapi.me/twitch/id/${channelName}`
-);
-const userId = await userIdResponse.text();
+async function getUserId() {
+  if (userId) return userId;
 
-/*
-  BTTV Global Emotes Fetching
-*/
-const bttvGlobalEmotesResponse = await fetch(
-  "https://api.betterttv.net/3/cached/emotes/global"
-);
+  const queryParameters = new URLSearchParams(window.location.search);
+  const channelName = queryParameters.get("channel");
 
-const bttvGlobalEmotes = await bttvGlobalEmotesResponse.json();
+  const userIdResponse = await fetch(
+    `https://decapi.me/twitch/id/${channelName}`
+  );
 
-export const bttvGlobalLookupTable = bttvGlobalEmotes.reduce(
-  (result, emote) => {
+  userId = await userIdResponse.text();
+
+  return userId;
+}
+
+async function getBttvGlobalLookupTable() {
+  if (bttvGlobalLookupTable) return bttvGlobalLookupTable;
+
+  const bttvGlobalEmotesResponse = await fetch(
+    "https://api.betterttv.net/3/cached/emotes/global"
+  );
+
+  const bttvGlobalEmotes = await bttvGlobalEmotesResponse.json();
+
+  bttvGlobalLookupTable = bttvGlobalEmotes.reduce((result, emote) => {
     const emoteData = {
       id: emote.id,
       type: emote.imageType,
@@ -28,26 +36,26 @@ export const bttvGlobalLookupTable = bttvGlobalEmotes.reduce(
     result[emote.code] = emoteData;
 
     return result;
-  },
-  {}
-);
+  }, {});
 
-export const bttvGlobalEmoteCodes = Object.keys(bttvGlobalLookupTable);
+  return bttvGlobalLookupTable;
+}
 
-/*
-  BTTV Channel Emotes Fetching
-*/
-const bttvChannelEmotesResponse = await fetch(
-  `https://api.betterttv.net/3/cached/users/twitch/${userId}`
-);
+async function getBttvChannelLookupTable() {
+  if (bttvChannelLookupTable) return bttvChannelLookupTable;
 
-const bttvChannelEmotesJSON = await bttvChannelEmotesResponse.json();
-const bttvChannelEmotes = bttvChannelEmotesJSON.channelEmotes.concat(
-  bttvChannelEmotesJSON.sharedEmotes
-);
+  const userId = await getUserId();
 
-export const bttvChannelLookupTable = bttvChannelEmotes.reduce(
-  (result, emote) => {
+  const bttvChannelEmotesResponse = await fetch(
+    `https://api.betterttv.net/3/cached/users/twitch/${userId}`
+  );
+
+  const bttvChannelEmotesJSON = await bttvChannelEmotesResponse.json();
+  const bttvChannelEmotes = bttvChannelEmotesJSON.channelEmotes.concat(
+    bttvChannelEmotesJSON.sharedEmotes
+  );
+
+  bttvChannelLookupTable = bttvChannelEmotes.reduce((result, emote) => {
     const emoteData = {
       id: emote.id,
       type: emote.imageType,
@@ -56,23 +64,23 @@ export const bttvChannelLookupTable = bttvChannelEmotes.reduce(
     result[emote.code] = emoteData;
 
     return result;
-  },
-  {}
-);
+  }, {});
 
-export const bttvChannelEmoteCodes = Object.keys(bttvChannelLookupTable);
+  return bttvChannelLookupTable;
+}
 
-/*
-  FrankerFaceZ Global Emotes Fetching
-*/
-const ffzChannelEmotesResponse = await fetch(
-  `https://api.betterttv.net/3/cached/frankerfacez/users/twitch/${userId}`
-);
+async function getFfzChannelLookupTable() {
+  if (ffzChannelLookupTable) return ffzChannelLookupTable;
 
-const ffzChannelEmotes = await ffzChannelEmotesResponse.json();
+  const userId = await getUserId();
 
-export const ffzChannelLookupTable = ffzChannelEmotes.reduce(
-  (result, emote) => {
+  const ffzChannelEmotesResponse = await fetch(
+    `https://api.betterttv.net/3/cached/frankerfacez/users/twitch/${userId}`
+  );
+
+  const ffzChannelEmotes = await ffzChannelEmotesResponse.json();
+
+  ffzChannelLookupTable = ffzChannelEmotes.reduce((result, emote) => {
     const emoteData = {
       id: emote.id,
       type: emote.imageType,
@@ -81,8 +89,13 @@ export const ffzChannelLookupTable = ffzChannelEmotes.reduce(
     result[emote.code] = emoteData;
 
     return result;
-  },
-  {}
-);
+  }, {});
 
-export const ffzChannelEmoteCodes = Object.keys(ffzChannelLookupTable);
+  return ffzChannelLookupTable;
+}
+
+export default {
+  getBttvGlobalLookupTable,
+  getBttvChannelLookupTable,
+  getFfzChannelLookupTable,
+};
