@@ -1,0 +1,17 @@
+{
+  "name": "twitch-chat-overlay-base",
+  "version": "0.1.0",
+  "description": "A base for customizable Twitch chat overlays.",
+  "main": "index.html",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/a11yup/twitch-chat-overlay-base.git"
+  },
+  "author": "@a11yup",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/a11yup/twitch-chat-overlay-base/issues"
+  },
+  "homepage": "https://github.com/a11yup/twitch-chat-overlay-base#readme"
+}
