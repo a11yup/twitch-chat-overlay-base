@@ -15,7 +15,7 @@ const createMessageElement = async (tags, message) => {
   }
 
   const messageElement = document.createElement("p");
-  messageElement.innerHTML = `${userNameHTML}: ${messageHTMLWithEmotesReplaced}`;
+  messageElement.innerHTML = `${userNameHTML} ${messageHTMLWithEmotesReplaced}`;
 
   return messageElement;
 };
