@@ -61,7 +61,7 @@ body {
   justify-content: flex-end;
   line-height: var(--size-xxl);
   white-space: nowrap;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(0, 0, 0, 0.95);
 }
 
 .chat-strip p {
