@@ -35,7 +35,7 @@ body {
   padding: var(--size-xl);
   border-radius: 60px;
   overflow-y: hidden;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(0, 0, 0, 0.95);
 }
 
 .chat-box p {
