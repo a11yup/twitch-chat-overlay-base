@@ -71,3 +71,7 @@ body {
   height: var(--size-xl);
   vertical-align: middle;
 }
+
+.pronouns {
+  font-size: 1rem;
+}
