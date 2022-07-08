@@ -1,5 +1,6 @@
 /* Reusable CSS variables */
 :root {
+  --size-xs: 0.25rem; /* = 4px */
   --size-s: 0.5rem; /* = 8px */
   --size-m: 1rem; /* = 16px */
   --size-l: 1.5rem; /* = 24px */
@@ -74,4 +75,10 @@ body {
 
 .pronouns {
   font-size: 1rem;
+  background-color: #f4f4f4;
+  border: 1px solid #888888;
+  color: #000000;
+  border-radius: var(--size-xs);
+  padding: var(--size-xs);
+  margin-left: var(--size-s);
 }

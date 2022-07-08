@@ -11,7 +11,7 @@ const createMessageElement = async (tags, message) => {
 
   const userPronouns = await fetchPronounsForUser(tags.username);
   if (userPronouns) {
-    userNameHTML += `<span class="pronouns"> (${userPronouns})</span>`;
+    userNameHTML += `<span class="pronouns">${userPronouns}</span>`;
   }
 
   const messageElement = document.createElement("p");
