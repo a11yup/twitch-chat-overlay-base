@@ -59,12 +59,12 @@ body {
   display: flex;
   justify-content: flex-end;
   line-height: var(--size-xxl);
+  white-space: nowrap;
   background-color: rgba(0, 0, 0, 0.9);
 }
 
 .chat-strip p {
   margin-left: var(--size-s);
-  flex: 1 0 auto;
 }
 
 .chat-strip p img {
