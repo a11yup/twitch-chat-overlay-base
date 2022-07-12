@@ -2,10 +2,7 @@
   "name": "twitch-chat-overlay-base",
   "version": "0.1.0",
   "description": "A base for customizable Twitch chat overlays.",
-  "scripts": {
-    "start": "parcel src/index.dev.html --open 'Google Chrome'",
-    "build": "parcel build src/index.html"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/a11yup/twitch-chat-overlay-base.git"
@@ -15,11 +12,5 @@
   "bugs": {
     "url": "https://github.com/a11yup/twitch-chat-overlay-base/issues"
   },
-  "homepage": "https://github.com/a11yup/twitch-chat-overlay-base#readme",
-  "dependencies": {
-    "escape-string-regexp": "^5.0.0"
-  },
-  "devDependencies": {
-    "parcel": "^2.6.2"
-  }
+  "homepage": "https://github.com/a11yup/twitch-chat-overlay-base#readme"
 }

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Twitch Chat Overlay</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://github.com/tmijs/tmi.js/releases/download/v1.8.5/tmi.min.js"></script>
+  <script type="module" src=""></script>
+  <script type="module">
+    import processMessage from "";
+
+    async function createMessageHTMLElement(tags, message) {
+      let { messageHTML, displayName, userColor, pronounsText } =
+        await processMessage(tags, message);
+
+      console.log(tags);
+
+      // if user color is not set, use another default
+      userColor = userColor || "#b9a3e3";
+
+      let userNameHTML = `<span class="username" style="color: ${userColor}">${displayName}</span>`;
+
+      if (pronounsText) {
+        userNameHTML = `<span class="pronouns" style="color: ${userColor}; border: 2px solid ${userColor}" >${pronounsText}</span>${userNameHTML}`;
+      }
+
+      const messageElement = document.createElement("p");
+      messageElement.className = "message";
+      messageElement.setAttribute("data-message-id", tags.id);
+      messageElement.innerHTML = `${userNameHTML} ${messageHTML}`;
+
+      return messageElement;
+    }
+
+    function setup() {
+      const MAX_MESSAGES_COUNT = 20;
+
+      const queryParameters = new URLSearchParams(window.location.search);
+      const CHANNEL_NAME = queryParameters.get("channel");
+      const CHAT_STRIP_MODE = queryParameters.has("chatStrip");
+
+      let chatContainerSelectorName;
+
+      if (CHAT_STRIP_MODE) {
+        document.querySelector(".chat-box").style.display = "none";
+        chatContainerSelectorName = ".chat-strip";
+      } else {
+        document.querySelector(".chat-strip").style.display = "none";
+        chatContainerSelectorName = ".chat-box";
+      }
+
+      const client = tmi.Client({
+        channels: [CHANNEL_NAME],
+      });
+
+      client.connect();
+
+      client.on("message", async (channel, tags, message, self) => {
+        const messageElement = await createMessageHTMLElement(tags, message);
+
+        const chatBoxElement = document.querySelector(chatContainerSelectorName);
+        chatBoxElement.append(messageElement);
+
+        const allMessageElements = document.querySelectorAll(
+          `${chatContainerSelectorName} p`
+        );
+
+        if (allMessageElements.length > MAX_MESSAGES_COUNT) {
+          // remove the first message from the beginning of the list
+          allMessageElements[0]?.remove();
+        }
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", setup);
+  </script>
+</head>
+
+<body>
+  <div class="chat-box"></div>
+  <div class="chat-strip"></div>
+</body>
+
+</html>
