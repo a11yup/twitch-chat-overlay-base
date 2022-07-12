@@ -8,16 +8,17 @@
   <title>Twitch Chat Overlay</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://github.com/tmijs/tmi.js/releases/download/v1.8.5/tmi.min.js"></script>
-  <script type="module" src=""></script>
+  <script type="module"
+    src="https://cdn.jsdelivr.net/gh/a11yup/twitch-chat-message-processor@v1.0.0/dist/browser.js"></script>
   <script type="module">
-    import processMessage from "";
+    import processMessage from "https://cdn.jsdelivr.net/gh/a11yup/twitch-chat-message-processor@v1.0.0/dist/browser.js";
 
     async function createMessageHTMLElement(tags, message) {
-      let { messageHTML, displayName, userColor, pronounsText } =
-        await processMessage(tags, message);
+      const messageData = await processMessage(tags, message);
 
-      console.log(tags);
+      const { messageHTML, displayName, pronounsText } = messageData;
 
+      let { userColor } = messageData;
       // if user color is not set, use another default
       userColor = userColor || "#b9a3e3";
 
