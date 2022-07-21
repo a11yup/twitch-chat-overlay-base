@@ -8,6 +8,7 @@
   <title>Twitch Chat Overlay</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://github.com/tmijs/tmi.js/releases/download/v1.8.5/tmi.min.js"></script>
+  <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
   <script type="module"
     src="https://cdn.jsdelivr.net/gh/a11yup/twitch-chat-message-processor@v1.0.0/dist/browser.js"></script>
   <script type="module">
@@ -32,6 +33,8 @@
       messageElement.className = "message";
       messageElement.setAttribute("data-message-id", tags.id);
       messageElement.innerHTML = `${userNameHTML} ${messageHTML}`;
+
+      twemoji.parse(messageElement);
 
       return messageElement;
     }
