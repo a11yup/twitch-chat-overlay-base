@@ -37,6 +37,7 @@ body {
   padding: var(--size-xl);
   border-radius: 60px;
   overflow-y: hidden;
+  line-height: var(--size-xxl);
   background-color: rgba(0, 0, 0, 0.95);
 }
 
@@ -48,6 +49,10 @@ body {
   margin: -1rem 0;
   height: var(--size-xxl);
   vertical-align: middle;
+}
+
+.chat-box p img.emoji {
+  height: var(--size-xl);
 }
 
 /* Styling for chat strip */
@@ -70,8 +75,13 @@ body {
 }
 
 .chat-strip p img {
-  height: var(--size-xl);
+  height: var(--size-xxl);
+  margin-bottom: 0.3em;
   vertical-align: middle;
+}
+
+.chat-strip p img.emoji {
+  height: 1.5em;
 }
 
 .pronouns {
