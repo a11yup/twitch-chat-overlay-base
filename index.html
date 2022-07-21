@@ -10,9 +10,9 @@
   <script src="https://github.com/tmijs/tmi.js/releases/download/v1.8.5/tmi.min.js"></script>
   <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
   <script type="module"
-    src="https://cdn.jsdelivr.net/gh/a11yup/twitch-chat-message-processor@v1.0.0/dist/browser.js"></script>
+    src="https://cdn.jsdelivr.net/gh/a11yup/twitch-chat-message-processor@v1.0.1/dist/browser.min.js"></script>
   <script type="module">
-    import processMessage from "https://cdn.jsdelivr.net/gh/a11yup/twitch-chat-message-processor@v1.0.0/dist/browser.js";
+    import processMessage from "https://cdn.jsdelivr.net/gh/a11yup/twitch-chat-message-processor@v1.0.1/dist/browser.min.js";
 
     async function createMessageHTMLElement(tags, message) {
       const messageData = await processMessage(tags, message);
