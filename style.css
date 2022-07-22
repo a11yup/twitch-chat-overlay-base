@@ -36,7 +36,7 @@ body {
   height: 80%;
   padding: var(--size-xl);
   border-radius: 60px;
-  overflow-y: hidden;
+  overflow: hidden;
   line-height: var(--size-xxl);
   background-color: rgba(0, 0, 0, 0.95);
 }
